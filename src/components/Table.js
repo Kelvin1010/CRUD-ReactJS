@@ -11,6 +11,7 @@ import {
     TableContainer,
     Card,
     Button,
+    Avatar,
 } from '@chakra-ui/react'
 import { userData } from '../data/userData';
 import { Link } from 'react-router-dom';
@@ -68,6 +69,7 @@ function Tables() {
                             <Thead>
                             <Tr>
                                 <Th>ID</Th>
+                                <Th>Avatar</Th>
                                 <Th>Name</Th>
                                 <Th>multiply by</Th>
                             </Tr>
@@ -75,6 +77,10 @@ function Tables() {
                             <Tbody>
                                 {data.map((item) => (
                                     <Tr key={item.id}>
+                                        <Td>{item.id}</Td>
+                                        <Td>
+                                            <Avatar src={item.img} name={item.name} />
+                                        </Td>
                                         <Td>{item.name}</Td>
                                         <Td>{item.des}</Td>
                                         <Td>
