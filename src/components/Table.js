@@ -16,24 +16,26 @@ import {
 import { userData } from '../data/userData';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Search from './Search';
 
-function Tables() {
+function Tables({data,props}) {
 
-    const [data, setData] = useState([]);
+    const [dt, setDt] = useState([]);
+
+    function handleDelete(id){
+        axios
+            .delete(`https://63e498bdc04baebbcda80821.mockapi.io/kel/${id}`)
+            .then((res)=>setDt(res.data));
+    }
 
     const getData = () => {
         try {
             axios
                 .get("https://63e498bdc04baebbcda80821.mockapi.io/kel")
-                .then((res) =>setData(res.data))
+                .then((res) =>setDt(res.data))
         } catch (error) {
             console.log(error)
         }
-    }
-
-    function handleDelete(id){
-        axios.delete(`https://63e498bdc04baebbcda80821.mockapi.io/kel/${id}`).then(()=>{getData()});
-        
     }
 
     const setToLocalStorage = (id,name,des) => {
@@ -45,22 +47,9 @@ function Tables() {
         getData();
     },[])
 
-    console.log(data)
 
     return (
         <div style={{flexDirection:'column'}} className='make-center'>
-            <div style={{
-                width:'85vw',
-                display:'flex',
-                justifyContent:'end',
-                marginBottom:'20px',
-            }}>
-                <Button colorScheme='green' variant='outline' w={100} right={'max'}>
-                        <Link to={'/create'}>
-                            Create 
-                        </Link>
-                </Button>
-            </div>
             <div className='make-center'>
                 <Card>
                     <TableContainer bgSize={'contain'} style={{width:'70vw'}}>
