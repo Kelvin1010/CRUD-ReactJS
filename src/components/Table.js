@@ -18,34 +18,14 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Search from './Search';
 
-function Tables({data,props}) {
+function Tables({data, getData, handleDelete}) {
 
     const [dt, setDt] = useState([]);
-
-    function handleDelete(id){
-        axios
-            .delete(`https://63e498bdc04baebbcda80821.mockapi.io/kel/${id}`)
-            .then((res)=>setDt(res.data));
-    }
-
-    const getData = () => {
-        try {
-            axios
-                .get("https://63e498bdc04baebbcda80821.mockapi.io/kel")
-                .then((res) =>setDt(res.data))
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const setToLocalStorage = (id,name,des) => {
         localStorage.setItem("name",name)
         localStorage.setItem("des",des)
     }
-
-    useEffect(() => {
-        getData();
-    },[])
 
 
     return (
@@ -64,7 +44,7 @@ function Tables({data,props}) {
                             </Tr>
                             </Thead>
                             <Tbody>
-                                {data.map((item) => (
+                                {data?.map((item) => (
                                     <Tr key={item.id}>
                                         <Td>{item.id}</Td>
                                         <Td>

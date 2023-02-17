@@ -3,18 +3,18 @@ import { Button, Input, InputGroup, InputLeftAddon, Stack } from '@chakra-ui/rea
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { dataState } from '../helper/atom'
+import NoneData from './NoneData'
 import Tables from './Table'
 
 function Search() {
 
-    const [data, setData] = useRecoilState(dataState);
+    const [data, setData] = useState([]);
     const [query, setQuery] = useState("");
+    // const [dataSearch, setDataSearch]  = useState([]);
 
     const keys = ["name", "des"]
 
-    const getData = () => {
+    const getData = async () => {
         try {
             axios
                 .get("https://63e498bdc04baebbcda80821.mockapi.io/kel")
@@ -24,12 +24,32 @@ function Search() {
         }
     }
 
+    async function handleDelete(id){
+        try {
+            await axios
+                .delete(`https://63e498bdc04baebbcda80821.mockapi.io/kel/${id}`)
+            getData();
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const search = (data) => {
-        return data.filter((item) => 
-            keys.some((key) => item[key].toLowerCase().includes(query)) 
+        return data?.filter((item) => 
+            keys?.some((key) => item[key]?.toLowerCase().includes(query?.toLowerCase())) 
     )}
 
-    const hi = search(data)
+    // const search1 = () => {
+    //     if(query !== ""){
+    //         return data;
+    //     }else{
+    //         return dataSearch.filter((item) =>
+    //             keys.some((key) => item[key].toLowerCase().includes(query.toLowerCase()))
+    //         )
+    //     }
+    // }
+
+    const numberData = search(data)
 
     useEffect(() => {
         getData();
@@ -70,13 +90,13 @@ function Search() {
                         </Link>
                 </Button>
             </div>
-            {(hi.length === 0) ? (
+            {(numberData.length === 0) ? (
                 <>
-                    <p  style={{color: "red"}}>Khong co!</p>
+                    <NoneData />
                 </>
             ):(
                 <>
-                <Tables data={search(data)}/>
+                    <Tables data={search(data)} handleDelete={handleDelete}/>
                 </>
             )}
         </div>
