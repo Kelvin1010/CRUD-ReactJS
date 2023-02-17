@@ -95,9 +95,14 @@ function Search() {
                     <NoneData />
                 </>
             ):(
-                <>
-                    <Tables data={search(data)} handleDelete={handleDelete}/>
-                </>
+                // (query !== '') 
+                // ? (
+                    <>
+                        <Tables data={search(data)} handleDelete={handleDelete}/>
+                    </>
+                // ): (
+                //     <></>
+                // )
             )}
         </div>
     )
