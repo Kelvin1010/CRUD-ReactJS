@@ -1,7 +1,7 @@
 import { SearchIcon } from '@chakra-ui/icons'
 import { Button, Input, InputGroup, InputLeftAddon, Stack } from '@chakra-ui/react'
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import NoneData from './NoneData'
 import Tables from './Table'
@@ -14,7 +14,7 @@ function Search() {
 
     const keys = ["name", "des"]
 
-    const getData = async () => {
+    const getData = useCallback(() => {
         try {
             axios
                 .get("https://63e498bdc04baebbcda80821.mockapi.io/kel")
@@ -22,7 +22,7 @@ function Search() {
         } catch (error) {
             console.log(error)
         }
-    }
+    },[])
 
     async function handleDelete(id){
         try {

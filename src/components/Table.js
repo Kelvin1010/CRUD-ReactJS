@@ -40,7 +40,8 @@ function Tables({data, getData, handleDelete}) {
                                 <Th>ID</Th>
                                 <Th>Avatar</Th>
                                 <Th>Name</Th>
-                                <Th>multiply by</Th>
+                                <Th>Description</Th>
+                                <Th>Action</Th>
                             </Tr>
                             </Thead>
                             <Tbody>
